@@ -10,15 +10,34 @@
 </head>
 <body>
 
-    <!-- section-1 -->
-    <div class="section-1" id="design">
-        <h1>CREATIVE DESIGN</h1>
-        <div class="navbar">
+    <!-- Sticky Navbar -->
+    <nav class="sticky-navbar" id="navbar">
+        <div class="navbar-logo">
+            <i class="fa-solid fa-bezier-curve"></i>
+            <span>Creative Design</span>
+        </div>
+        <div class="navbar-menu">
             <a href="#design" class="navbar-link">Design</a>
             <a href="#customers" class="navbar-link">Customers</a>
             <a href="#team" class="navbar-link">Team</a>
             <a href="#contact" class="navbar-link">Contact</a>
         </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- section-1 -->
+    <div class="section-1" id="design">
+        <canvas id="particles-canvas"></canvas>
+        <h1 class="hero-title"><span class="letter">C</span><span class="letter">R</span><span class="letter">E</span><span class="letter">A</span><span class="letter">T</span><span class="letter">I</span><span class="letter">V</span><span class="letter">E</span> <span class="letter">D</span><span class="letter">E</span><span class="letter">S</span><span class="letter">I</span><span class="letter">G</span><span class="letter">N</span></h1>
+        <p class="hero-subtitle reveal">We create amazing digital experiences</p>
+        <a href="#contact" class="hero-cta reveal">
+            <span>Get Started</span>
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
         <div class="floating-bg"></div>
         <div class="logo">
             <i class="fa-solid fa-bezier-curve"></i>
@@ -27,76 +46,85 @@
 
     <!-- section-2 -->
     <div class="section-2" id="customers">
-        <h1 class="section-heading">
+        <h1 class="section-heading reveal">
             Customers
         </h1>
-        <div class="customers-container">
-            <div class="customers-card">
-                <div class="customers-card-icon icon-style">
-                    <i class="fa-solid fa-quote-left"></i>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn carousel-btn-prev" id="prevBtn">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="customers-carousel" id="customersCarousel">
+                <div class="customers-card">
+                    <div class="customers-card-icon icon-style">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div class="customers-card-description">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Tempora totam voluptatum accusantium pariatur,
+                            nulla quasi quibusdam ipsa quisquam repellat atque,
+                            tempore assumenda vitae. Earum fuga a accusamus,
+                            nisi ullam delectus!
+                        </p>
+                    </div>
+                    <div class="customers-card-rate">
+                    </div>
+                    <div class="customers-card-name">
+                    </div>
                 </div>
-                <div class="customers-card-description">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tempora totam voluptatum accusantium pariatur, 
-                        nulla quasi quibusdam ipsa quisquam repellat atque, 
-                        tempore assumenda vitae. Earum fuga a accusamus, 
-                        nisi ullam delectus!
-                    </p>
+
+                <div class="customers-card">
+                    <div class="customers-card-icon icon-style">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div class="customers-card-description">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Tempora totam voluptatum accusantium pariatur,
+                            nulla quasi quibusdam ipsa quisquam repellat atque,
+                            tempore assumenda vitae. Earum fuga a accusamus,
+                            nisi ullam delectus!
+                        </p>
+                    </div>
+                    <div class="customers-card-rate">
+                    </div>
+                    <div class="customers-card-name">
+                    </div>
                 </div>
-                <div class="customers-card-rate">
-                </div>
-                <div class="customers-card-name">
+
+                <div class="customers-card">
+                    <div class="customers-card-icon icon-style">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div class="customers-card-description">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Tempora totam voluptatum accusantium pariatur,
+                            nulla quasi quibusdam ipsa quisquam repellat atque,
+                            tempore assumenda vitae. Earum fuga a accusamus,
+                            nisi ullam delectus!
+                        </p>
+                    </div>
+                    <div class="customers-card-rate">
+                    </div>
+                    <div class="customers-card-name">
+                    </div>
                 </div>
             </div>
-    
-            <div class="customers-card">
-                <div class="customers-card-icon icon-style">
-                    <i class="fa-solid fa-quote-left"></i>
-                </div>
-                <div class="customers-card-description">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tempora totam voluptatum accusantium pariatur, 
-                        nulla quasi quibusdam ipsa quisquam repellat atque, 
-                        tempore assumenda vitae. Earum fuga a accusamus, 
-                        nisi ullam delectus!
-                    </p>
-                </div>
-                <div class="customers-card-rate">
-                </div>
-                <div class="customers-card-name">
-                </div>
-            </div>
-    
-            <div class="customers-card">
-                <div class="customers-card-icon icon-style">
-                    <i class="fa-solid fa-quote-left"></i>
-                </div>
-                <div class="customers-card-description">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tempora totam voluptatum accusantium pariatur, 
-                        nulla quasi quibusdam ipsa quisquam repellat atque, 
-                        tempore assumenda vitae. Earum fuga a accusamus, 
-                        nisi ullam delectus!
-                    </p>
-                </div>
-                <div class="customers-card-rate">
-                </div>
-                <div class="customers-card-name">
-                </div>
-            </div>
-        </div>   
+            <button class="carousel-btn carousel-btn-next" id="nextBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
     </div>
 
     <!-- section-3 -->
     <div class="section-3" id="team">
-        <h1 class="section-heading">
+        <h1 class="section-heading reveal">
             Teams
         </h1>
-        <div class="team-container"> 
-            <div class="team-card">
+        <div class="team-container">
+            <div class="team-card reveal-scale reveal-delay-1">
                 <img src="./img/team-member-1.jpg" alt="">
                 <h4>John Doe</h4>
                 <span>Web-Developer</span>
@@ -123,8 +151,8 @@
                 </div>
                 <div class="change-background "></div>
             </div>
-    
-            <div class="team-card">
+
+            <div class="team-card reveal-scale reveal-delay-2">
                 <img src="./img/team-member-2.jpg" alt="">
                 <h4>John Doe</h4>
                 <span>Front-End-Developer</span>
@@ -151,8 +179,8 @@
                 </div>
                 <div class="change-background "></div>
             </div>
-    
-            <div class="team-card">
+
+            <div class="team-card reveal-scale reveal-delay-3">
                 <img src="./img/team-member-3.jpg" alt="">
                 <h4>John Doe</h4>
                 <span>Back-End-Developer</span>
@@ -185,9 +213,9 @@
 
     <!-- section-4: form section -->
     <div class="section-4" id="contact">
-        <h1 class="section-heading">Contact</h1>
-    
-        <div class="form-section">
+        <h1 class="section-heading reveal">Contact</h1>
+
+        <div class="form-section reveal">
             <img src="./img/form-img.png" alt="">
             <form >
                 <input type="text" placeholder="Your Name">

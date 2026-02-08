@@ -130,6 +130,317 @@ for (let i = 0; i < iconsBtn.length; i++) {
 
 // section-4
 
+// Carousel for Customers Section
+class CustomersCarousel {
+    constructor() {
+        this.carousel = document.getElementById('customersCarousel');
+        this.cards = document.querySelectorAll('.customers-card');
+        this.prevBtn = document.getElementById('prevBtn');
+        this.nextBtn = document.getElementById('nextBtn');
+        this.dotsContainer = document.getElementById('carouselDots');
+        this.currentIndex = 0;
+        this.autoScrollInterval = null;
+        this.autoScrollDelay = 4000;
+
+        this.init();
+    }
+
+    init() {
+        // Create dots
+        this.createDots();
+
+        // Add event listeners
+        this.prevBtn.addEventListener('click', () => this.prev());
+        this.nextBtn.addEventListener('click', () => this.next());
+
+        // Touch/Swipe support
+        let startX = 0;
+        let endX = 0;
+
+        this.carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        this.carousel.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) this.next();
+            if (endX - startX > 50) this.prev();
+        });
+
+        // Start auto scroll
+        this.startAutoScroll();
+
+        // Pause on hover
+        const wrapper = document.querySelector('.carousel-wrapper');
+        wrapper.addEventListener('mouseenter', () => this.stopAutoScroll());
+        wrapper.addEventListener('mouseleave', () => this.startAutoScroll());
+
+        // Initial update
+        this.updateCarousel();
+    }
+
+    createDots() {
+        this.cards.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('carousel-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => this.goTo(index));
+            this.dotsContainer.appendChild(dot);
+        });
+    }
+
+    updateDots() {
+        const dots = document.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentIndex);
+        });
+    }
+
+    getCardWidth() {
+        return this.cards[0].offsetWidth + 30; // card width + gap
+    }
+
+    updateCarousel() {
+        const cardWidth = this.getCardWidth();
+        const offset = -this.currentIndex * cardWidth;
+        this.carousel.style.transform = `translateX(${offset}px)`;
+        this.updateDots();
+    }
+
+    next() {
+        this.currentIndex = (this.currentIndex + 1) % this.cards.length;
+        this.updateCarousel();
+        this.resetAutoScroll();
+    }
+
+    prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+        this.updateCarousel();
+        this.resetAutoScroll();
+    }
+
+    goTo(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+        this.resetAutoScroll();
+    }
+
+    startAutoScroll() {
+        this.autoScrollInterval = setInterval(() => this.next(), this.autoScrollDelay);
+    }
+
+    stopAutoScroll() {
+        clearInterval(this.autoScrollInterval);
+    }
+
+    resetAutoScroll() {
+        this.stopAutoScroll();
+        this.startAutoScroll();
+    }
+}
+
+// Initialize carousel when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new CustomersCarousel();
+});
+
+// Hero Particles Animation
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+
+// Set canvas size
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Particle class
+class Particle {
+    constructor() {
+        this.reset();
+    }
+
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.color = `rgba(255, 255, 255, ${this.opacity})`;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Wrap around screen
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+// Create particles
+const particles = [];
+const particleCount = 80;
+
+for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+}
+
+// Mouse interaction
+let mouse = { x: null, y: null };
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+});
+
+// Connect particles with lines
+function connectParticles() {
+    for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+            const dx = particles[a].x - particles[b].x;
+            const dy = particles[a].y - particles[b].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+                const opacity = (150 - distance) / 150 * 0.2;
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particles[a].x, particles[a].y);
+                ctx.lineTo(particles[b].x, particles[b].y);
+                ctx.stroke();
+            }
+        }
+
+        // Connect to mouse
+        if (mouse.x !== null && mouse.y !== null) {
+            const dx = particles[a].x - mouse.x;
+            const dy = particles[a].y - mouse.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 200) {
+                const opacity = (200 - distance) / 200 * 0.3;
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particles[a].x, particles[a].y);
+                ctx.lineTo(mouse.x, mouse.y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+// Animation loop
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+    });
+
+    connectParticles();
+    requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+
+// Reset mouse when leaving window
+window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+});
+
+// Sticky Navbar with scroll effect
+const navbar = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const navbarMenu = document.querySelector('.navbar-menu');
+const navbarLinks = document.querySelectorAll('.navbar-link');
+
+// Change navbar style on scroll
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+
+    // Update active link based on scroll position
+    updateActiveLink();
+});
+
+// Hamburger menu toggle
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navbarMenu.classList.toggle('active');
+    document.body.style.overflow = navbarMenu.classList.contains('active') ? 'hidden' : '';
+});
+
+// Close menu when clicking on a link
+navbarLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navbarMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// Update active link based on scroll position
+function updateActiveLink() {
+    const sections = document.querySelectorAll('.section-1, .section-2, .section-3, .section-4');
+    const scrollPos = window.scrollY + 150;
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            navbarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+}
+
+// Scroll Reveal Animations using Intersection Observer
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Optional: Stop observing after revealing
+            // observer.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.15, // Trigger when 15% of element is visible
+    rootMargin: '0px 0px -50px 0px' // Offset from bottom
+});
+
+// Observe all reveal elements
+revealElements.forEach(element => {
+    revealObserver.observe(element);
+});
+
 // show the form
 const inputBtn = document.querySelector('.submit-wrapper')
 const showForm = document.querySelector('.form-section form')
